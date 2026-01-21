@@ -13,9 +13,9 @@ class HomeFailure extends HomeState {
 }
 
 class HomeSuccess extends HomeState {
-  final HomeModel urlShorteners;
+  final List<HomeModel> data;
 
   HomeSuccess({
-    required this.urlShorteners,
+    required this.data,
   });
 }

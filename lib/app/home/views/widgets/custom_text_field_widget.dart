@@ -10,23 +10,20 @@ class CustomTextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(6),
-      ),
-      child: TextField(
-        controller: _textEditingController,
-        decoration: InputDecoration(
-          label: Text('Sua url longa'),
-          suffixIcon: IconButton(
-            onPressed: () {
-              _textEditingController.clear();
-            },
-            icon: Icon(Icons.clear),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(6),
-          ),
+    return TextField(
+      controller: _textEditingController,
+      keyboardType: TextInputType.url,
+      decoration: InputDecoration(
+        label: Text('Cole sua URL'),
+        hintText: 'https://exemplo.com',
+        suffixIcon: IconButton(
+          onPressed: () {
+            _textEditingController.clear();
+          },
+          icon: Icon(Icons.clear),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
         ),
       ),
     );

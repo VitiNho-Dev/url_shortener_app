@@ -7,20 +7,17 @@ class HomeModel {
     required this.urlShort,
   });
 
-  factory HomeModel.fromJson(Map<String, dynamic> json) {
+  factory HomeModel.fromJson(Map<String, Object?> json) {
     return HomeModel(
-      urlLong: '',
-      urlShort: json['urlEncurtada'] as String,
-      // urlShorteners: (json['urlsEncurtadas'] as List<Object?>)
-      //     .cast<Map<String, dynamic>>()
-      //     .map((url) => url['url'] as String)
-      //     .toList(),
+      urlLong: json['urlLong'] as String,
+      urlShort: json['urlShort'] as String,
     );
   }
 
-  static Map<String, dynamic> toJson(String url) {
+  static Map<String, dynamic> toJson(HomeModel model) {
     return {
-      'url': url,
+      'urlLong': model.urlLong,
+      'urlShort': model.urlShort,
     };
   }
 

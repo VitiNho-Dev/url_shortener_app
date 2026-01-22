@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:url_shortener_app/app/home/controllers/home_controller.dart';
 import 'package:url_shortener_app/app/home/controllers/home_state.dart';
 import 'package:url_shortener_app/app/home/views/widgets/custom_text_field_widget.dart';
-import 'package:url_shortener_app/app/home/views/widgets/custom_text_result_widget.dart';
 import 'package:url_shortener_app/app/home/views/widgets/list_url_shortners_widget.dart';
 
 class HomePage extends StatefulWidget {

@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(
-          controller: HomeController(),
+          controller: HomeController.controller,
         ),
       },
     );

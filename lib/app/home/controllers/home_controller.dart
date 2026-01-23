@@ -27,22 +27,46 @@ class HomeController extends ValueNotifier<HomeState> {
 
       final urlShort = json['urlEncurtada'] as String;
 
-      final homeModel = HomeModel(urlLong: url, urlShort: urlShort);
+      final homeModel = HomeModel(
+        id: 0,
+        urlLong: url,
+        urlShort: urlShort,
+      );
 
       _saveHomeModel(homeModel);
     } else {
-      value = HomeFailure(error: Exception('Ocorreu um erro ao enviar o URL'));
+      value = HomeFailure(
+        error: Exception('Ocorreu um erro ao enviar o URL'),
+      );
     }
   }
 
   Future<void> _saveHomeModel(HomeModel data) async {
     final db = await _database;
 
+    final result = await db.query('urls_shortner');
+
+    final newModel = data.copyWith(id: result.length + 1);
+
     await db.insert(
-      'urlsShortner',
-      HomeModel.toJson(data),
+      'urls_shortner',
+      HomeModel.toJson(newModel),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+
+    getHistoricUrl();
+  }
+
+  Future<void> deleteUrlShort(int id) async {
+    final db = await _database;
+
+    await db.delete(
+      'urls_shortner',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    getHistoricUrl();
   }
 
   Future<void> getHistoricUrl() async {
@@ -50,12 +74,17 @@ class HomeController extends ValueNotifier<HomeState> {
 
     final db = await _database;
 
-    final result = await db.query('urlsShortner');
+    final result = await db.query('urls_shortner');
 
     final homeModel = (result as List)
         .cast<Map<String, Object?>>()
         .map(HomeModel.fromJson)
         .toList();
+
+    if (homeModel.isEmpty) {
+      value = HomeInitial();
+      return;
+    }
 
     value = HomeSuccess(data: homeModel);
   }

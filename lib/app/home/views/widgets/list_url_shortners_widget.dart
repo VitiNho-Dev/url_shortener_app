@@ -5,11 +5,13 @@ class ListUrlShortnersWidget extends StatelessWidget {
   const ListUrlShortnersWidget({
     super.key,
     required this.data,
-    required this.onPressed,
+    required this.onCopyText,
+    required this.onDelete,
   });
 
   final List<HomeModel> data;
-  final Function(String value) onPressed;
+  final Function(String value) onCopyText;
+  final Function(int value) onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +40,7 @@ class ListUrlShortnersWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: ListTile(
+                    contentPadding: EdgeInsets.only(left: 12),
                     title: Text(
                       url.urlShort,
                       maxLines: 1,
@@ -48,9 +51,19 @@ class ListUrlShortnersWidget extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.copy),
-                      onPressed: () => onPressed(url.urlShort),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.copy),
+                          onPressed: () => onCopyText(url.urlShort),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.delete),
+                          onPressed: () => onDelete(url.id),
+                        ),
+                      ],
                     ),
                   ),
                 );

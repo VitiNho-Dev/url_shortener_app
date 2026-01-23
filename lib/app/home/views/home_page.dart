@@ -27,6 +27,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _textEditingController = TextEditingController();
     _controller.getHistoricUrl();
+    _controller.addListener(_showError);
   }
 
   void _copyToClipboard(String text) async {
@@ -41,9 +42,24 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  void _showError() {
+    final state = _controller.value;
+
+    if (state is HomeFailure) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(state.error.toString()),
+        ),
+      );
+
+      _controller.getHistoricUrl();
+    }
+  }
+
   @override
   void dispose() {
     _textEditingController.dispose();
+    _controller.removeListener(_showError);
     super.dispose();
   }
 
@@ -82,14 +98,13 @@ class _HomePageState extends State<HomePage> {
                   HomeLoading() => Center(
                     child: CircularProgressIndicator(),
                   ),
-                  HomeFailure() => Center(
-                    child: Text(
-                      'Não foi possível carregar o histórico de urls encurtada!',
-                    ),
-                  ),
+                  HomeFailure() => SizedBox.shrink(),
                   HomeSuccess(:final data) => ListUrlShortnersWidget(
                     data: data,
-                    onPressed: _copyToClipboard,
+                    onCopyText: _copyToClipboard,
+                    onDelete: (value) {
+                      _controller.deleteUrlShort(value);
+                    },
                   ),
                 },
               ),

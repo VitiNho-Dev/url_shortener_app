@@ -11,7 +11,11 @@ class DBClient {
       join(await getDatabasesPath(), 'home_model.db'),
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE urlsShortner(id INTIGER PRIMARY KEY, urlLong TEXT, urlShort TEXT)',
+          '''CREATE TABLE IF NOT EXISTS urls_shortner (
+            id INTIGER PRIMARY KEY,
+            urlLong TEXT NOT NULL,
+            urlShort TEXT NOT NULL
+          )''',
         );
       },
       version: 1,

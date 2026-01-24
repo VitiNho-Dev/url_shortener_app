@@ -42,12 +42,12 @@ class ListUrlShortnersWidget extends StatelessWidget {
                   child: ListTile(
                     contentPadding: EdgeInsets.only(left: 12),
                     title: Text(
-                      url.urlShort,
+                      url.shortUrl,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                     subtitle: Text(
-                      url.urlLong,
+                      url.longUrl,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -57,11 +57,11 @@ class ListUrlShortnersWidget extends StatelessWidget {
                       children: [
                         IconButton(
                           icon: const Icon(Icons.copy),
-                          onPressed: () => onCopyText(url.urlShort),
+                          onPressed: () => onCopyText(url.shortUrl),
                         ),
                         IconButton(
                           icon: const Icon(Icons.delete),
-                          onPressed: () => onDelete(url.id),
+                          onPressed: () => onDelete(url.id!),
                         ),
                       ],
                     ),

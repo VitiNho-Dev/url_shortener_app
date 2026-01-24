@@ -13,9 +13,9 @@ class HomeFailure extends HomeState {
 }
 
 class HomeSuccess extends HomeState {
-  final List<HomeModel> data;
+  final List<HomeModel> model;
 
   HomeSuccess({
-    required this.data,
+    required this.model,
   });
 }

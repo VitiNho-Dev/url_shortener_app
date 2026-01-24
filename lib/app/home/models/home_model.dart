@@ -1,39 +1,26 @@
 class HomeModel {
-  final int id;
-  final String urlLong;
-  final String urlShort;
+  final int? id;
+  final String longUrl;
+  final String shortUrl;
 
   const HomeModel({
-    required this.id,
-    required this.urlLong,
-    required this.urlShort,
+    this.id,
+    required this.longUrl,
+    required this.shortUrl,
   });
 
   factory HomeModel.fromJson(Map<String, Object?> json) {
     return HomeModel(
       id: json['id'] as int,
-      urlLong: json['urlLong'] as String,
-      urlShort: json['urlShort'] as String,
+      longUrl: json['long_url'] as String,
+      shortUrl: json['short_url'] as String,
     );
   }
 
   static Map<String, dynamic> toJson(HomeModel model) {
     return {
-      'id': model.id,
-      'urlLong': model.urlLong,
-      'urlShort': model.urlShort,
+      'long_url': model.longUrl,
+      'short_url': model.shortUrl,
     };
-  }
-
-  HomeModel copyWith({
-    int? id,
-    String? urlLong,
-    String? urlShort,
-  }) {
-    return HomeModel(
-      id: id ?? this.id,
-      urlLong: urlLong ?? this.urlLong,
-      urlShort: urlShort ?? this.urlShort,
-    );
   }
 }

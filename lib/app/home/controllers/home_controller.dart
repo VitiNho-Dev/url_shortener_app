@@ -25,15 +25,14 @@ class HomeController extends ValueNotifier<HomeState> {
     if (response.statusCode == 200 || response.statusCode == 201) {
       final json = jsonDecode(response.body) as Map<String, dynamic>;
 
-      final urlShort = json['urlEncurtada'] as String;
+      final shortUrl = json['urlEncurtada'] as String;
 
-      final homeModel = HomeModel(
-        id: 0,
-        urlLong: url,
-        urlShort: urlShort,
+      final model = HomeModel(
+        longUrl: url,
+        shortUrl: shortUrl,
       );
 
-      _saveHomeModel(homeModel);
+      _saveShortenedUrl(model);
     } else {
       value = HomeFailure(
         error: Exception('Ocorreu um erro ao enviar o URL'),
@@ -41,51 +40,47 @@ class HomeController extends ValueNotifier<HomeState> {
     }
   }
 
-  Future<void> _saveHomeModel(HomeModel data) async {
+  Future<void> _saveShortenedUrl(HomeModel data) async {
     final db = await _database;
 
-    final result = await db.query('urls_shortner');
-
-    final newModel = data.copyWith(id: result.length + 1);
-
     await db.insert(
-      'urls_shortner',
-      HomeModel.toJson(newModel),
+      'shortened_url',
+      HomeModel.toJson(data),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
 
-    getHistoricUrl();
+    getAllShortenedUrl();
   }
 
-  Future<void> deleteUrlShort(int id) async {
+  Future<void> deleteShortenedUrl(int id) async {
     final db = await _database;
 
     await db.delete(
-      'urls_shortner',
+      'shortened_url',
       where: 'id = ?',
       whereArgs: [id],
     );
 
-    getHistoricUrl();
+    getAllShortenedUrl();
   }
 
-  Future<void> getHistoricUrl() async {
+  Future<void> getAllShortenedUrl() async {
     value = HomeLoading();
 
     final db = await _database;
 
-    final result = await db.query('urls_shortner');
+    final result = await db.query('shortened_url');
 
-    final homeModel = (result as List)
+    final model = (result as List)
         .cast<Map<String, Object?>>()
         .map(HomeModel.fromJson)
         .toList();
 
-    if (homeModel.isEmpty) {
+    if (model.isEmpty) {
       value = HomeInitial();
       return;
     }
 
-    value = HomeSuccess(data: homeModel);
+    value = HomeSuccess(model: model);
   }
 }

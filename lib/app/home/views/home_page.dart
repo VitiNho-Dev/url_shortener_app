@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _textEditingController = TextEditingController();
-    _controller.getHistoricUrl();
+    _controller.getAllShortenedUrl();
     _controller.addListener(_showError);
   }
 
@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
         ),
       );
 
-      _controller.getHistoricUrl();
+      _controller.getAllShortenedUrl();
     }
   }
 
@@ -99,11 +99,11 @@ class _HomePageState extends State<HomePage> {
                     child: CircularProgressIndicator(),
                   ),
                   HomeFailure() => SizedBox.shrink(),
-                  HomeSuccess(:final data) => ListUrlShortnersWidget(
+                  HomeSuccess(model: final data) => ListUrlShortnersWidget(
                     data: data,
                     onCopyText: _copyToClipboard,
                     onDelete: (value) {
-                      _controller.deleteUrlShort(value);
+                      _controller.deleteShortenedUrl(value);
                     },
                   ),
                 },

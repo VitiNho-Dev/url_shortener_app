@@ -11,16 +11,16 @@ class HomeModel {
 
   factory HomeModel.fromJson(Map<String, Object?> json) {
     return HomeModel(
-      id: json['id'] as int,
+      id: json['id'] as int?,
       longUrl: json['long_url'] as String,
       shortUrl: json['short_url'] as String,
     );
   }
 
-  static Map<String, dynamic> toJson(HomeModel model) {
+  Map<String, dynamic> toJson() {
     return {
-      'long_url': model.longUrl,
-      'short_url': model.shortUrl,
+      'long_url': longUrl,
+      'short_url': shortUrl,
     };
   }
 }

@@ -40,12 +40,12 @@ class HomeController extends ValueNotifier<HomeState> {
     }
   }
 
-  Future<void> _saveShortenedUrl(HomeModel data) async {
+  Future<void> _saveShortenedUrl(HomeModel model) async {
     final db = await _database;
 
     await db.insert(
       'shortened_url',
-      HomeModel.toJson(data),
+      model.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_shortener_app/app/home/controllers/home_controller.dart';
+import 'package:url_shortener_app/app/home/data/repositories/home_repository.dart';
+import 'package:url_shortener_app/app/home/data/services/api/api_client.dart';
 
 import 'home/views/home_page.dart';
 
@@ -25,7 +27,11 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(
-          controller: HomeController.controller,
+          controller: HomeController(
+            repository: ApiHomeRepository(
+              apiClient: ApiClient(),
+            ),
+          ),
         ),
       },
     );

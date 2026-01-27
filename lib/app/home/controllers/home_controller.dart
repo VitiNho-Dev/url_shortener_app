@@ -1,42 +1,30 @@
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
 import 'package:sqflite/sql.dart';
+import 'package:url_shortener_app/app/core/results.dart';
 import 'package:url_shortener_app/app/home/controllers/home_state.dart';
 import 'package:url_shortener_app/app/home/data/db_client.dart';
+import 'package:url_shortener_app/app/home/data/repositories/home_repository.dart';
 
 import '../models/home_model.dart';
 
 class HomeController extends ValueNotifier<HomeState> {
-  HomeController._() : super(HomeInitial());
-
-  static final controller = HomeController._();
+  HomeController({required HomeRepository repository})
+    : _repository = repository,
+      super(HomeInitial());
 
   final _database = DBClient.db.database;
+  final HomeRepository _repository;
 
   Future<void> sendUrl(String url) async {
-    final response = await http.post(
-      Uri.parse('https://api.encurtador.dev/encurtamentos'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'url': url}),
-    );
+    final result = await _repository(url);
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      final json = jsonDecode(response.body) as Map<String, dynamic>;
-
-      final shortUrl = json['urlEncurtada'] as String;
-
-      final model = HomeModel(
-        longUrl: url,
-        shortUrl: shortUrl,
-      );
-
-      _saveShortenedUrl(model);
-    } else {
-      value = HomeFailure(
-        error: Exception('Ocorreu um erro ao enviar o URL'),
-      );
+    switch (result) {
+      case Ok<HomeModel>():
+        _saveShortenedUrl(result.value);
+        break;
+      case Error():
+        value = HomeFailure(error: result.error);
+        break;
     }
   }
 

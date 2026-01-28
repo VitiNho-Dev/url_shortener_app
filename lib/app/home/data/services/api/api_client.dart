@@ -24,8 +24,11 @@ class ApiClient {
 
       log('POST: ${response.statusCode}');
 
+      final data = jsonDecode(response.body);
+      final errorMessage = data['message'] ?? ErrorMessages.failureToShortenURL;
+
       return Result.error(
-        ApiError(message: ErrorMessages.failureToShortenURL),
+        ApiError(message: errorMessage),
       );
     } on ClientHttpError catch (error, stackTrace) {
       log('ClientHttpError: ${error.message}', stackTrace: stackTrace);

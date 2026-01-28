@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
     if (state is HomeFailure) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(state.error.toString()),
+          content: Text(state.error.message),
         ),
       );
 

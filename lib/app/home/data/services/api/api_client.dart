@@ -30,11 +30,15 @@ class ApiClient {
     } on ClientHttpError catch (error, stackTrace) {
       log('ClientHttpError: ${error.message}', stackTrace: stackTrace);
 
-      return Result.error(ClientHttpError(message: ErrorMessages.onServer));
+      return Result.error(
+        ClientHttpError(message: ErrorMessages.onServer),
+      );
     } catch (error, stackTrace) {
       log('Unexpected error: ${error.toString()}', stackTrace: stackTrace);
 
-      return Result.error(UnexpectedError(message: ErrorMessages.unexpected));
+      return Result.error(
+        UnexpectedError(message: ErrorMessages.unexpected),
+      );
     }
   }
 }

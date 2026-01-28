@@ -2,10 +2,6 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DBClient {
-  DBClient._();
-
-  static final db = DBClient._();
-
   Future<Database> get database async {
     final database = openDatabase(
       join(await getDatabasesPath(), 'shortened_url.db'),

@@ -1,3 +1,4 @@
+import 'package:url_shortener_app/app/core/custom_errors.dart';
 import 'package:url_shortener_app/app/home/models/home_model.dart';
 
 sealed class HomeState {}
@@ -7,7 +8,7 @@ class HomeInitial extends HomeState {}
 class HomeLoading extends HomeState {}
 
 class HomeFailure extends HomeState {
-  final Exception error;
+  final Failure error;
 
   HomeFailure({required this.error});
 }

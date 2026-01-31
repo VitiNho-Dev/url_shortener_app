@@ -5,6 +5,8 @@ import 'package:url_shortener_app/app/home/controllers/home_state.dart';
 import 'package:url_shortener_app/app/home/views/widgets/custom_text_field_widget.dart';
 import 'package:url_shortener_app/app/home/views/widgets/list_url_shortners_widget.dart';
 
+import '../../config/privacy_policy/open_privacy_policy.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({
     super.key,
@@ -73,11 +75,12 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: const Text('Encurtador de URL'),
           centerTitle: true,
+          forceMaterialTransparency: true,
         ),
         body: Padding(
           padding: EdgeInsets.all(16),
           child: Column(
-            spacing: 12,
+            spacing: 8,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               CustomTextFieldWidget(
@@ -107,6 +110,10 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                 },
+              ),
+              TextButton(
+                onPressed: openPrivacyPolicy,
+                child: Text('Política de Privacidade'),
               ),
             ],
           ),

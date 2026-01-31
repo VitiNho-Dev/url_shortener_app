@@ -1,5 +1,5 @@
 import 'package:sqflite/sql.dart';
-import 'package:url_shortener_app/app/home/data/db_client.dart';
+import 'package:url_shortener_app/app/home/data/services/local/db_client.dart';
 import 'package:url_shortener_app/app/home/models/home_model.dart';
 
 class LocalDataService {

@@ -11,7 +11,10 @@ class ApiClient {
     try {
       final response = await http.post(
         Uri.parse('https://api.encurtador.dev/encurtamentos'),
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
         body: jsonEncode({'url': url}),
       );
 

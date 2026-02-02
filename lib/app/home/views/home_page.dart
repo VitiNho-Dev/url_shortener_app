@@ -102,8 +102,8 @@ class _HomePageState extends State<HomePage> {
                     child: CircularProgressIndicator(),
                   ),
                   HomeFailure() => SizedBox.shrink(),
-                  HomeSuccess(model: final data) => ListUrlShortnersWidget(
-                    data: data,
+                  HomeSuccess(:final model) => ListUrlShortnersWidget(
+                    data: model,
                     onCopyText: _copyToClipboard,
                     onDelete: (value) {
                       _controller.deleteShortenedUrl(value);

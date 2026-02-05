@@ -31,18 +31,32 @@ android {
     }
 
     buildTypes {
-       getByName("debug") {}
-       getByName("release") {}
+       getByName("debug") {
+            applicationIdSuffix = ".debug"
+            isDebuggable = true
+       }
+       getByName("release") {
+            isMinifyEnabled = true
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+       }
     }
 
     flavorDimensions += "default"
     productFlavors {
         create("staging") {
             dimension = "default"
+            resValue(
+                type = "string",
+                name = "app_name",
+                value = "URL Shortener staging")
             applicationIdSuffix = ".staging"
         }
         create("production") {
             dimension = "default"
+            resValue(
+                type = "string",
+                name = "app_name",
+                value = "URL Shortener")
             applicationIdSuffix = ".production"
         }
     }

@@ -111,11 +111,13 @@ class _HomePageState extends State<HomePage> {
                   ),
                 },
               ),
-              TextButton(
-                onPressed: openPrivacyPolicy,
-                child: Text('Política de Privacidade'),
-              ),
             ],
+          ),
+        ),
+        bottomNavigationBar: SafeArea(
+          child: TextButton(
+            onPressed: openPrivacyPolicy,
+            child: Text('Política de Privacidade'),
           ),
         ),
       ),
